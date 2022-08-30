@@ -14,12 +14,12 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import CropFreeIcon from "@material-ui/icons/CropFree";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import InfoIcon from "@material-ui/icons/Info";
 import ShareIcon from "@material-ui/icons/Share";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import React from "react";
+import { IoQrCodeOutline } from "react-icons/io5";
 import QRCode from "react-qr-code";
 
 const useStyles = makeStyles({
@@ -149,7 +149,7 @@ export default function DependencyCard({ data }) {
               onClick={() => showQR()}
               style={{ whiteSpace: "break-spaces" }}
             >
-              <CropFreeIcon style={{ color: "black" }} label="Share" />
+              <IoQrCodeOutline style={{ color: "black" }} label="Share" />
             </IconButton>
           </Tooltip>
 

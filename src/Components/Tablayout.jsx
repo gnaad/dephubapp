@@ -1,10 +1,18 @@
+import { Tooltip } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import Package from "../../package.json";
 import Common from "../Tabs/Common";
 
 function TabPanel(props) {
@@ -43,40 +51,102 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "100%",
-    paddingBottom: "2%",
     backgroundColor: theme.palette.background.paper,
+  },
+  tab: {
+    backgroundColor: "white",
+    color: "black",
+    justifyContent: "center",
+  },
+  scroller: {
+    flexGrow: "0",
   },
 }));
 
 export default function Tablayout() {
-  const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [options, setOptions] = useState(null);
+  const classes = useStyles();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const openOptions = (event) => {
+    setOptions(event.currentTarget);
+  };
+
+  const closeOptions = () => {
+    setOptions(null);
+  };
+
+  const openMail = () => {
+    window.open("mailto:mailtodephub@gmail.com");
+  };
+
+  const openApp = () => {
+    window.open(
+      "https://play.google.com/store/apps/details?id=com.dephub.android",
+      "_self"
+    );
+  };
+
+  const openFeedback = () => {
+    window.open("https://dephub.co/feedback", "_self");
+  };
+
   return (
     <div className={classes.root}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons="off"
-        indicatorColor="primary"
-        aria-label="scrollable prevent tabs example"
-      >
-        <Tab label="Text" aria-label="Text" {...a11yProps(0)} />
-        <Tab label="Button" aria-label="Button" {...a11yProps(1)} />
-        <Tab label="Widget" aria-label="Widget" {...a11yProps(2)} />
-        <Tab label="Layout" aria-label="Layout" {...a11yProps(3)} />
-        <Tab label="Container" aria-label="Container" {...a11yProps(4)} />
-        <Tab label="Helper" aria-label="Helper" {...a11yProps(5)} />
-        <Tab label="Google" aria-label="Google" {...a11yProps(6)} />
-        <Tab label="Legacy" aria-label="Legacy" {...a11yProps(7)} />
-        <Tab label="Others" aria-label="Others" {...a11yProps(8)} />
-      </Tabs>
+      <AppBar position="sticky" elevation={0}>
+        <Toolbar>
+          <Typography variant="h6">
+            DepHub Web <small style={{ fontSize: "10px" }}>Beta</small>
+          </Typography>
+          <Tooltip title="More Options">
+            <IconButton
+              aria-label="More Options"
+              onClick={(event) => openOptions(event)}
+              style={{
+                marginLeft: "auto",
+                marginRight: "0%",
+              }}
+            >
+              <MoreVertIcon style={{ color: "white" }} label="More Options" />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            id="simple-menu"
+            anchorEl={options}
+            keepMounted
+            open={Boolean(options)}
+            onClose={closeOptions}
+          >
+            <MenuItem onClick={() => openMail()}>Mail Us</MenuItem>
+            <MenuItem onClick={() => openApp()}>Download Official App</MenuItem>
+            <MenuItem onClick={() => openFeedback()}>Write Feedback</MenuItem>
+            <MenuItem>Version - {Package.version}</MenuItem>
+          </Menu>
+        </Toolbar>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          variant="scrollable"
+          scrollButtons="auto"
+          classes={{ root: classes.tab, scroller: classes.scroller }}
+          aria-label="scrollable prevent tabs example"
+        >
+          <Tab label="Text" aria-label="Text" {...a11yProps(0)} />
+          <Tab label="Button" aria-label="Button" {...a11yProps(1)} />
+          <Tab label="Widget" aria-label="Widget" {...a11yProps(2)} />
+          <Tab label="Layout" aria-label="Layout" {...a11yProps(3)} />
+          <Tab label="Container" aria-label="Container" {...a11yProps(4)} />
+          <Tab label="Helper" aria-label="Helper" {...a11yProps(5)} />
+          <Tab label="Google" aria-label="Google" {...a11yProps(6)} />
+          <Tab label="Legacy" aria-label="Legacy" {...a11yProps(7)} />
+          <Tab label="Others" aria-label="Others" {...a11yProps(8)} />
+        </Tabs>
+      </AppBar>
       <TabPanel value={value} index={0}>
         <Common dependencyType="Text" />
       </TabPanel>

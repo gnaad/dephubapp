@@ -1,12 +1,10 @@
 import React from "react";
-import Appbar from "./Appbar";
 import Tablayout from "./Tablayout";
 
 const Home = () => {
   return (
     <div>
-      <Appbar/>
-      <Tablayout/>
+      <Tablayout />
     </div>
   );
 };
